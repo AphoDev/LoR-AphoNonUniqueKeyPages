@@ -4,6 +4,44 @@ namespace AphoNonUniqueKeyPages
 {
     public class PassiveAbility_AphoNonUniqueKeyPages_Angela : PassiveAbilityBase
     {
+        public override void OnWaveStart()
+        {
+            BattleUnitEmotionDetail emotionDetail = owner.emotionDetail;
+            switch (emotionDetail.EmotionLevel)
+            {
+                //level 1 - Malk/yesod
+                case 1:
+                    this.owner.personalEgoDetail.AddCard(9910011);
+                    this.owner.personalEgoDetail.AddCard(9910012);
+                    break;
+                //level 2 - hod/netzach
+                case 2:
+                    this.owner.personalEgoDetail.AddCard(9910013);
+                    this.owner.personalEgoDetail.AddCard(9910014);
+                    goto case 1;
+                //level 3 - tiph/geb/chesed
+                case 3:
+                    this.owner.personalEgoDetail.AddCard(9910015);
+                    this.owner.personalEgoDetail.AddCard(9910016);
+                    this.owner.personalEgoDetail.AddCard(9910017);
+                    goto case 2;
+                //level 4 - binah/hokma
+                case 4:
+                    this.owner.personalEgoDetail.AddCard(9910018);
+                    this.owner.personalEgoDetail.AddCard(9910019);
+                    goto case 3;
+                //level 5 - knowing I, if all cards have been used
+                case 5:
+                    if (this._usedCount.Count >= 9)
+                    {
+                        this.owner.personalEgoDetail.AddCard(new LorId(AphoNonUniqueKeyPages.PackageId, 9910021));
+                    }
+                    goto case 4;
+                default:
+                    break;
+            }
+
+        }
         public override void OnLevelUpEmotion()
         {
             BattleUnitEmotionDetail emotionDetail = owner.emotionDetail;
